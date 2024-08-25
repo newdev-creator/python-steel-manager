@@ -1,0 +1,80 @@
+[
+    {
+        "id": 1,
+        "date": "2024-08-21 16:05:51",
+        "matiere": "Inox",
+        "poids": 600.0
+    },
+    {
+        "id": 2,
+        "date": "21-08-2024",
+        "matiere": "Inox",
+        "poids": 600.0
+    },
+    {
+        "id": 3,
+        "date": "21-08-2024",
+        "matiere": "Acier",
+        "poids": 500.0
+    },
+    {
+        "id": 4,
+        "date": "21-08-2024",
+        "matiere": "Cuivre",
+        "poids": 900.0
+    },
+    {
+        "id": 5,
+        "date": "21-08-2024",
+        "matiere": "Acier",
+        "poids": 10000.0
+    },
+    {
+        "id": 6,
+        "date": "21-08-2024",
+        "matiere": "Acier",
+        "poids": 456.0
+    },
+    {
+        "id": 7,
+        "date": "21-08-2024",
+        "matiere": "Cuivre",
+        "poids": 42354252.0
+    },
+    {
+        "id": 8,
+        "date": "21-08-2024",
+        "matiere": "Acier",
+        "poids": 234.0
+    },
+    {
+        "id": 9,
+        "date": "21-08-2024",
+        "matiere": "Inox",
+        "poids": 234.0
+    },
+    {
+        "id": 10,
+        "date": "21-08-2024",
+        "matiere": "Inox",
+        "poids": 987.0
+    },
+    {
+        "id": 11,
+        "date": "21-08-2024",
+        "matiere": "Inox",
+        "poids": 3424.0
+    },
+    {
+        "id": 12,
+        "date": "22-08-2024",
+        "matiere": "Inox",
+        "poids": 345.0
+    },
+    {
+        "id": 13,
+        "date": "22/08/2024",
+        "matiere": "Inox",
+        "poids": 654654.0
+    }
+]
