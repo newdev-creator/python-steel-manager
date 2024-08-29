@@ -44,7 +44,7 @@ class FormulaireApp:
         self.root: ctk.CTk = root
         self.root.title("Formulaire")
 
-        self.password: str = "1234"
+        self.password: str = "1992"
         self.entries: List[Entry] = DataHandler.load_data()
         self.id_counter: int = self.entries[-1].id + 1 if self.entries else 1
 
@@ -142,6 +142,7 @@ class FormulaireApp:
         filename: str = self.prepare_pdf_directory(f"tableau_{current_date}.pdf")
         doc = SimpleDocTemplate(filename, pagesize=A4)
         elements = [self.create_pdf_title(), self.create_pdf_date(), self.create_data_table(),
+                    self.create_pdf_subtitle(),
                     self.create_weight_summary_table()]
         doc.build(elements)
         messagebox.showinfo("Exportation", f"Le tableau a été exporté en PDF sous le nom {filename}.")
@@ -157,7 +158,8 @@ class FormulaireApp:
         return Paragraph("Tableau des Entrées", title_style)
 
     def create_pdf_date(self) -> Paragraph:
-        normal_style = getSampleStyleSheet()['Normal']
+        styles = getSampleStyleSheet()
+        normal_style = ParagraphStyle(name="Centered", parent=styles['Normal'], alignment=TA_CENTER, spaceAfter=10)
         return Paragraph(f"Date de création: {datetime.now().strftime('%d/%m/%Y')}", normal_style)
 
     def create_data_table(self) -> Table:
@@ -177,6 +179,12 @@ class FormulaireApp:
             ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
             ('GRID', (0, 0), (-1, -1), 1, colors.black),
         ]))
+
+    def create_pdf_subtitle(self) -> Paragraph:
+        styles = getSampleStyleSheet()
+        title_style = ParagraphStyle(name="Centered", parent=styles['Title'], alignment=TA_CENTER, spaceBefore=10,
+                                     spaceAfter=10)
+        return Paragraph("Tableau des sommes", title_style)
 
     def create_weight_summary_table(self) -> Table:
         matiere_dict = self.calculate_weight_summary()
