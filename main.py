@@ -1,15 +1,14 @@
+import customtkinter as ctk
 import json
 import os
 from datetime import datetime
-from tkinter import messagebox, simpledialog, ttk
-from typing import List, Dict, Any, Optional
-
-import customtkinter as ctk
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle
+from tkinter import messagebox, simpledialog, ttk
+from typing import List, Dict, Any, Optional
 
 FILE_PATH = "data.json"
 
@@ -80,14 +79,14 @@ class FormulaireApp:
         self.txt_poids.grid(row=1, column=1)
 
     def create_buttons(self) -> None:
-        ctk.CTkButton(self.root, text="Valider", command=self.add_entry).grid(row=2, column=0, columnspan=2, padx=20,
+        ctk.CTkButton(self.root, text="Valider", command=self.add_entry, fg_color="green", hover_color="darkgreen").grid(row=2, column=0, columnspan=2, padx=20,
                                                                               pady=(10, 20))
         ctk.CTkButton(self.root, text="Exporter en PDF", command=lambda: self.check_password(self.export_to_pdf)).grid(
             row=4, column=0, columnspan=2, padx=20, pady=10)
-        ctk.CTkButton(self.root, text="Exporter Somme en PDF",
-                      command=lambda: self.check_password(self.export_sum_to_pdf)).grid(row=5, column=0, columnspan=2,
-                                                                                        padx=20, pady=(0, 10))
-        ctk.CTkButton(self.root, text="Vider le Tableau", command=lambda: self.check_password(self.clear_table)).grid(
+        # ctk.CTkButton(self.root, text="Exporter Somme en PDF",
+        #               command=lambda: self.check_password(self.export_sum_to_pdf)).grid(row=5, column=0, columnspan=2,
+        #                                                                                 padx=20, pady=(0, 10))
+        ctk.CTkButton(self.root, text="Vider le Tableau", command=lambda: self.check_password(self.clear_table), fg_color="red", hover_color="darkred").grid(
             row=6, column=0, columnspan=2, padx=20, pady=(0, 10))
 
     def create_treeview(self) -> ttk.Treeview:
