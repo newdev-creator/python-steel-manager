@@ -1,16 +1,20 @@
-import customtkinter as ctk
 import json
 import os
 from datetime import datetime
+from tkinter import messagebox, simpledialog, ttk
+from typing import List, Dict, Any, Optional
+
+import customtkinter as ctk
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle
-from tkinter import messagebox, simpledialog, ttk
-from typing import List, Dict, Any, Optional
 
 FILE_PATH = "data.json"
+
+material_list = ["Acier", "Cuivre", "Laiton", "Bronze", "Titane", "Fonte", "Inox 304L", "Inox 316L", "Inox 174PH",
+                 "Inox 15-5PH", "Aluminium 7075", "Aluminium 2017"]
 
 
 class Entry:
@@ -72,7 +76,7 @@ class FormulaireApp:
     def create_entry_fields(self) -> None:
         self.matiere_var: ctk.StringVar = ctk.StringVar(value="Inox")
         self.dropdown_matiere: ctk.CTkOptionMenu = ctk.CTkOptionMenu(self.root, variable=self.matiere_var,
-                                                                     values=["Inox", "Acier", "Aluminium", "Cuivre"])
+                                                                     values=material_list)
         self.dropdown_matiere.grid(row=0, column=1)
 
         self.txt_poids: ctk.CTkEntry = ctk.CTkEntry(self.root)

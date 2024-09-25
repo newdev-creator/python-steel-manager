@@ -54,12 +54,6 @@
         "poids": 234.0
     },
     {
-        "id": 10,
-        "date": "21-08-2024",
-        "matiere": "Inox",
-        "poids": 987.0
-    },
-    {
         "id": 11,
         "date": "21-08-2024",
         "matiere": "Inox",
@@ -76,5 +70,11 @@
         "date": "22/08/2024",
         "matiere": "Inox",
         "poids": 654654.0
+    },
+    {
+        "id": 14,
+        "date": "25/09/2024",
+        "matiere": "Inox 316L",
+        "poids": 845.0
     }
 ]
