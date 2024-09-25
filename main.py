@@ -18,11 +18,11 @@ material_list = ["Acier", "Cuivre", "Laiton", "Bronze", "Titane", "Fonte", "Inox
 
 
 class Entry:
-    def __init__(self, entry_id: int, date: str, matiere: str, poids: float) -> None:
+    def __init__(self, entry_id: int, date: str, matiere: str, poids: int) -> None:
         self.id: int = entry_id
         self.date: str = date
         self.matiere: str = matiere
-        self.poids: float = poids
+        self.poids: int = poids
 
 
 class DataHandler:
@@ -72,7 +72,6 @@ class FormulaireApp:
     def create_labels(self) -> None:
         ctk.CTkLabel(self.root, text="Matière", font=("Roboto", 25)).grid(row=0, column=0, padx=20, pady=(10, 20))
         ctk.CTkLabel(self.root, text="Poids", font=("Roboto", 25)).grid(row=1, column=0, padx=20, pady=(10, 20))
-
     def create_entry_fields(self) -> None:
         self.matiere_var: ctk.StringVar = ctk.StringVar(value="Inox")
         self.dropdown_matiere: ctk.CTkOptionMenu = ctk.CTkOptionMenu(self.root, variable=self.matiere_var,
@@ -83,15 +82,20 @@ class FormulaireApp:
         self.txt_poids.grid(row=1, column=1)
 
     def create_buttons(self) -> None:
-        ctk.CTkButton(self.root, text="Valider", command=self.add_entry, fg_color="green", hover_color="darkgreen").grid(row=2, column=0, columnspan=2, padx=20,
-                                                                              pady=(10, 20))
+        ctk.CTkButton(self.root, text="Valider", command=self.add_entry, fg_color="green",
+                      hover_color="darkgreen").grid(row=2, column=0, columnspan=2, padx=20, pady=(10, 20))
+
+        ctk.CTkButton(self.root, text="Supprimer la ligne selectionnée",
+                      command=lambda: self.check_password(self.delete_selected_entry), fg_color="red",
+                      hover_color="darkred").grid(row=3, column=0, columnspan=2, padx=20, pady=10)
+
         ctk.CTkButton(self.root, text="Exporter en PDF", command=lambda: self.check_password(self.export_to_pdf)).grid(
-            row=4, column=0, columnspan=2, padx=20, pady=10)
+            row=5, column=0, columnspan=2, padx=20, pady=10)
         # ctk.CTkButton(self.root, text="Exporter Somme en PDF",
         #               command=lambda: self.check_password(self.export_sum_to_pdf)).grid(row=5, column=0, columnspan=2,
         #                                                                                 padx=20, pady=(0, 10))
-        ctk.CTkButton(self.root, text="Vider le Tableau", command=lambda: self.check_password(self.clear_table), fg_color="red", hover_color="darkred").grid(
-            row=6, column=0, columnspan=2, padx=20, pady=(0, 10))
+        ctk.CTkButton(self.root, text="Vider le Tableau", command=lambda: self.check_password(self.clear_table),
+                      fg_color="red", hover_color="darkred").grid(row=7, column=0, columnspan=2, padx=20, pady=(0, 10))
 
     def create_treeview(self) -> ttk.Treeview:
         tree = ttk.Treeview(self.root, columns=("ID", "Date", "Matière", "Poids"), show="headings")
@@ -99,7 +103,7 @@ class FormulaireApp:
         tree.heading("Date", text="Date")
         tree.heading("Matière", text="Matière")
         tree.heading("Poids", text="Poids")
-        tree.grid(row=3, column=0, columnspan=2, padx=20, pady=10, sticky="nsew")
+        tree.grid(row=4, column=0, columnspan=2, padx=20, pady=10, sticky="nsew")
         return tree
 
     def check_password(self, action: Any) -> None:
@@ -116,7 +120,10 @@ class FormulaireApp:
         if not self.validate_entry(poids):
             return
 
-        entry = Entry(self.id_counter, datetime.now().strftime("%d/%m/%Y"), matiere, float(poids))
+        # subtract the 45 kg from the skip
+        modif_weight: int = int(poids) - 45
+
+        entry = Entry(self.id_counter, datetime.now().strftime("%d/%m/%Y"), matiere, modif_weight)
         self.entries.append(entry)
         self.id_counter += 1
         DataHandler.save_data(self.entries)
@@ -128,7 +135,7 @@ class FormulaireApp:
             messagebox.showerror("Erreur", "Veuillez remplir le champ Poids.")
             return False
         try:
-            float(poids)
+            int(poids)
         except ValueError:
             messagebox.showerror("Erreur", "Le poids doit être un nombre.")
             return False
@@ -139,6 +146,22 @@ class FormulaireApp:
             self.tree.delete(i)
         for entry in self.entries:
             self.tree.insert("", "end", values=(entry.id, entry.date, entry.matiere, entry.poids))
+
+    def delete_selected_entry(self) -> None:
+        selected_item = self.tree.selection()
+
+        if not selected_item:
+            messagebox.showerror("Erreur", "Veuillez sélectionner une ligne à supprimer.")
+            return
+
+        entry_id = self.tree.item(selected_item, "values")[0]
+
+        self.entries = [entry for entry in self.entries if str(entry.id) != entry_id]
+        DataHandler.save_data(self.entries)
+
+        self.tree.delete(selected_item)
+
+        messagebox.showinfo("Succès", "L'entrée a été supprimée.")
 
     def export_to_pdf(self) -> None:
         current_date: str = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
@@ -196,8 +219,8 @@ class FormulaireApp:
         self.style_table(sum_table)
         return sum_table
 
-    def calculate_weight_summary(self) -> Dict[str, float]:
-        matiere_dict: Dict[str, float] = {}
+    def calculate_weight_summary(self) -> Dict[str, int]:
+        matiere_dict: Dict[str, int] = {}
         for entry in self.entries:
             if entry.matiere in matiere_dict:
                 matiere_dict[entry.matiere] += entry.poids

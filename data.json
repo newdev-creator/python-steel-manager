@@ -6,22 +6,10 @@
         "poids": 600.0
     },
     {
-        "id": 2,
-        "date": "21-08-2024",
-        "matiere": "Inox",
-        "poids": 600.0
-    },
-    {
         "id": 3,
         "date": "21-08-2024",
         "matiere": "Acier",
         "poids": 500.0
-    },
-    {
-        "id": 4,
-        "date": "21-08-2024",
-        "matiere": "Cuivre",
-        "poids": 900.0
     },
     {
         "id": 5,
@@ -76,5 +64,23 @@
         "date": "25/09/2024",
         "matiere": "Inox 316L",
         "poids": 845.0
+    },
+    {
+        "id": 15,
+        "date": "25/09/2024",
+        "matiere": "Aluminium 2017",
+        "poids": 1.0
+    },
+    {
+        "id": 16,
+        "date": "25/09/2024",
+        "matiere": "Inox",
+        "poids": 411
+    },
+    {
+        "id": 17,
+        "date": "25/09/2024",
+        "matiere": "Inox",
+        "poids": 13
     }
 ]
